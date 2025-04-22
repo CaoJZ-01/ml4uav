@@ -63,12 +63,10 @@ if source_radio == settings.IMAGE:
             if source_img is None:
                 default_image_path = str(settings.DEFAULT_IMAGE)
                 default_image = PIL.Image.open(default_image_path)
-                st.image(default_image_path, caption="Default Image",
-                         use_container_width=True)
+                st.image(default_image_path, caption="Default Image")
             else:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption="Uploaded Image",
-                         use_container_width=True)
+                st.image(source_img, caption="Uploaded Image")
         except Exception as ex:
             st.error("Error occurred while opening the image.")
             st.error(ex)
@@ -92,8 +90,7 @@ if source_radio == settings.IMAGE:
                     res_plotted = st.session_state['res_plotted']
                     boxes = st.session_state['boxes']
 
-                st.image(res_plotted, caption='Detected Image',
-                         use_container_width=True)
+                st.image(res_plotted, caption='Detected Image')
 
                 # Convert the detected image to bytes for download
                 buf = io.BytesIO()
