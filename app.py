@@ -78,8 +78,7 @@ if source_radio == settings.IMAGE:
             default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
             default_detected_image = PIL.Image.open(
                 default_detected_image_path)
-            st.image(default_detected_image_path, caption='Detected Image',
-                     use_container_width=True)
+            st.image(default_detected_image_path, caption='Detected Image')
         else:
             detect_button_clicked = st.sidebar.button('Detect Objects')
             if detect_button_clicked or 'res_plotted' in st.session_state:
