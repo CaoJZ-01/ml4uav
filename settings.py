@@ -46,6 +46,8 @@ VIDEOS_DICT = {
 # ML Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
+DRONE_MODEL = MODEL_DIR / 'drone.pt'
+POWERLINE_MODEL = MODEL_DIR / 'powerline.pt'
 #SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
 
 # Webcam

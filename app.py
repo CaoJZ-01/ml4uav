@@ -35,7 +35,10 @@ confidence = float(st.sidebar.slider(
 
 # Selecting Detection Or Segmentation
 if model_type == 'Detection':
-    model_path = Path(settings.DETECTION_MODEL)
+    if task_selection == 'Drone Detection':
+        model_path = Path(settings.DRONE_MODEL)
+    elif task_selection == 'Powerline Detection':
+        model_path = Path(settings.POWERLINE_MODEL)
 elif model_type == 'Segmentation':
     model_path = Path(settings.SEGMENTATION_MODEL)
 
@@ -92,6 +95,19 @@ if source_radio == settings.IMAGE:
 
                 st.image(res_plotted, caption='Detected Image')
 
+                # Map detection results to structured format
+                detection_results = []
+                for box in boxes:
+                    x, y, w, h = box.xywh[0].tolist()
+                    cls = model.names[int(box.cls[0])]  # Get the name of the detected object
+                    detection_results.append({
+                        "x": x,
+                        "y": y,
+                        "w": w,
+                        "h": h,
+                        "cls": cls
+                    })
+
                 # Convert the detected image to bytes for download
                 buf = io.BytesIO()
                 detected_image = PIL.Image.fromarray(res_plotted)
@@ -106,18 +122,18 @@ if source_radio == settings.IMAGE:
                 )
 
                 # Convert detection results to text for download
-                detection_results = "\n".join([str(box.data) for box in boxes])
+                detection_results_text = "\n".join([str(result) for result in detection_results])
                 st.download_button(
                     label="Download detection results",
-                    data=detection_results,
+                    data=detection_results_text,
                     file_name="detection_results.txt",
                     mime="text/plain"
                 )
 
                 try:
                     with st.expander("Detection Results"):
-                        for box in boxes:
-                            st.write(box.data)
+                        for result in detection_results:
+                            st.write(result)
                 except Exception as ex:
                     st.write("No image is uploaded yet!")
 
